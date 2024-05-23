@@ -1,0 +1,18 @@
+version: "3"
+networks:
+  cwpnetwork:
+
+services:
+  cwp_server:
+    build: .
+    container_name: "cwp_server"
+    ports:
+      - "80:80"     
+      - "2030:2030"
+      - "3306:3306"
+      - "1021:21"
+      - "1020:20"
+      - "4242:4242"
+      - "4243:4243"
+    networks:
+      - "cwpnetwork"

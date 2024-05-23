@@ -1,6 +1,9 @@
 FROM centos:6.8
 
-MAINTAINER Bruno Bertechini "bruno.bertechini@outlook.com"
+RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+# MAINTAINER Bruno Bertechini "bruno.bertechini@outlook.com"
 
 #	
 # UPDATE PACKAGES
@@ -97,7 +100,7 @@ COPY httpd.conf /usr/local/apache/conf/httpd.conf
 #
 # MySQL Password
 #
-mysql_root_password=`cat /root/.my.cnf |grep password= | tr "=" " " | awk '{print$2}'`
+RUN mysql_root_password=`cat /root/.my.cnf |grep password= | tr "=" " " | awk '{print$2}'`
 RUN /usr/bin/mysqladmin -u root -p $mysql_root_password password 'mysql'
 
 #
